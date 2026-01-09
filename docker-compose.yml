@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # --- Service 1: Database (PostgreSQL) ---
+  db:
+    image: postgres:15
+    container_name: sixperience_db
+    restart: always
+    environment:
+      POSTGRES_DB: tubes_db       # .env: DB_DATABASE
+      POSTGRES_USER: postgres     # .env: DB_USERNAME
+      POSTGRES_PASSWORD: 123qwe   # .env: DB_PASSWORD
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  # --- Service 2: Backend (Laravel API) ---
+  backend:
+    build: ./backend-api
+    container_name: sixperience_backend
+    restart: always
+    ports:
+      - "8080:8000" # API kita akses via localhost:8080
+    depends_on:
+      - db
+    environment:
+      # Override setting .env Laravel di sini (PENTING!)
+      DB_CONNECTION: pgsql
+      DB_HOST: db            # Nama service database di atas
+      DB_PORT: 5432          # Port Internal Docker
+      DB_DATABASE: sixperience
+      DB_USERNAME: user_six
+      DB_PASSWORD: password_rahasia
+
+  # --- Service 3: Frontend (React Landing Page) ---
+  frontend:
+    build: ./frontend-web
+    container_name: sixperience_frontend
+    restart: always
+    ports:
+      - "8081:80" # Web dibuka via localhost:8081
+    depends_on:
+      - backend

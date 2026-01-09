@@ -1,0 +1,6 @@
+/backend-api/vendor
+/backend-api/.env
+/frontend-web/node_modules
+/frontend-web/.env
+.DS_Store
+db-data/
