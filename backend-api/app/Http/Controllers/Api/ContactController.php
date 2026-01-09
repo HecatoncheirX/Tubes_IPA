@@ -19,7 +19,7 @@ class ContactController extends Controller
         DB::table('contacts')->insert([
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone, // Opsional
+            'phone' => $request->phone,
             'message' => $request->message,
             'created_at' => now(),
             'updated_at' => now()
@@ -27,7 +27,7 @@ class ContactController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Terima kasih! Tim Sixperience akan menghubungi Anda.'
+            'message' => 'Terima kasih! Tim kami akan menghubungi Anda.'
         ], 201);
     }
 }
