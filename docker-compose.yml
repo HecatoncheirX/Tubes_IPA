@@ -1,44 +1,51 @@
-version: '3.8'
-
 services:
   # --- Service 1: Database (PostgreSQL) ---
   db:
     image: postgres:15
-    container_name: sixperience_db
+    container_name: tubes_db       # Nama Baru
     restart: always
     environment:
-      POSTGRES_DB: tubes_db       # .env: DB_DATABASE
-      POSTGRES_USER: postgres     # .env: DB_USERNAME
-      POSTGRES_PASSWORD: 123qwe   # .env: DB_PASSWORD
+      POSTGRES_DB: tubes_db        # Nama DB Baru
+      POSTGRES_USER: tubes_user    # User Baru
+      POSTGRES_PASSWORD: tubes_password # Password Baru
     volumes:
       - ./db-data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5435:5432"               # Port Aman
+    networks:
+      - tubes_net
 
-  # --- Service 2: Backend (Laravel API) ---
+  # --- Service 2: Backend (Laravel) ---
   backend:
-    build: ./backend-api
-    container_name: sixperience_backend
+    build:
+      context: ./backend-api
+      dockerfile: Dockerfile
+    container_name: tubes_backend  # Nama Baru
     restart: always
+    working_dir: /var/www/html
+    volumes:
+      - ./backend-api:/var/www/html
     ports:
-      - "8080:8000" # API kita akses via localhost:8080
+      - "8082:8000"               # Port Aman
     depends_on:
       - db
-    environment:
-      # Override setting .env Laravel di sini (PENTING!)
-      DB_CONNECTION: pgsql
-      DB_HOST: db            # Nama service database di atas
-      DB_PORT: 5432          # Port Internal Docker
-      DB_DATABASE: sixperience
-      DB_USERNAME: user_six
-      DB_PASSWORD: password_rahasia
+    networks:
+      - tubes_net
 
-  # --- Service 3: Frontend (React Landing Page) ---
+  # --- Service 3: Frontend (React) ---
   frontend:
-    build: ./frontend-web
-    container_name: sixperience_frontend
+    build:
+      context: ./frontend-web
+      dockerfile: Dockerfile
+    container_name: tubes_frontend # Nama Baru
     restart: always
     ports:
-      - "8081:80" # Web dibuka via localhost:8081
+      - "8081:80"                 # Port Aman
     depends_on:
       - backend
+    networks:
+      - tubes_net
+
+networks:
+  tubes_net:
+    driver: bridge
