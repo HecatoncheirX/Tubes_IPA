@@ -2,16 +2,16 @@ services:
   # --- Service 1: Database (PostgreSQL) ---
   db:
     image: postgres:15
-    container_name: tubes_db       # Nama Baru
+    container_name: tubes_db # Nama Baru
     restart: always
     environment:
-      POSTGRES_DB: tubes_db        # Nama DB Baru
-      POSTGRES_USER: tubes_user    # User Baru
+      POSTGRES_DB: tubes_db # Nama DB Baru
+      POSTGRES_USER: tubes_user # User Baru
       POSTGRES_PASSWORD: tubes_password # Password Baru
     volumes:
       - ./db-data:/var/lib/postgresql/data
-    ports:
-      - "5435:5432"               # Port Aman
+    # ports:
+    #   - "5435:5432" # Port Aman
     networks:
       - tubes_net
 
@@ -20,13 +20,13 @@ services:
     build:
       context: ./backend-api
       dockerfile: Dockerfile
-    container_name: tubes_backend  # Nama Baru
+    container_name: tubes_backend # Nama Baru
     restart: always
     working_dir: /var/www/html
     volumes:
       - ./backend-api:/var/www/html
     ports:
-      - "8082:8000"               # Port Aman
+      - "8082:8000" # Port Aman
     depends_on:
       - db
     networks:
@@ -40,11 +40,46 @@ services:
     container_name: tubes_frontend # Nama Baru
     restart: always
     ports:
-      - "8081:80"                 # Port Aman
+      - "8081:80" # Port Aman
     depends_on:
       - backend
     networks:
       - tubes_net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: tubes_prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - tubes_net
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: tubes_cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8080:8080"
+    networks:
+      - tubes_net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: tubes_grafana
+    ports:
+      - "3001:3000" # Grafana jalan di port 3000 (Pastikan React geser ke port lain atau Grafana pake 3001)
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin # Password login grafana
+    networks:
+      - tubes_net
+    depends_on:
+      - prometheus
 
 networks:
   tubes_net:
