@@ -84,7 +84,7 @@ const LandingPage = () => {
         <div className="absolute top-40 w-full h-[400px] bg-emerald-500/10 blur-[150px] rounded-full -z-10 float-animation"></div>
         <div className="text-emerald-500 font-bold text-xs tracking-[0.5em] mb-6 animate-pulse pulse-glow px-4 py-2 border border-emerald-500/30 bg-emerald-500/5">[ INITIATING_ACADEMIC_REVOLUTION ]</div>
         <h1 className="relative text-6xl md:text-[11rem] font-black text-white leading-[0.8] tracking-tighter uppercase mb-12 italic hover:scale-105 transition-transform duration-500">
-          BEYON GACOR <br />
+          BEYON <br />
           <span className="text-transparent relative inline-block" style={{ WebkitTextStroke: "2px #10b981" }}>
             LIMITS
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent scan-line"></div>
