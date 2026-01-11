@@ -1,5 +1,5 @@
 # Gunakan Image PHP 8.2
-FROM php:8.2-fpm
+FROM php:8.4-fpm
 
 # Install library yang dibutuhkan (termasuk driver PostgreSQL)
 RUN apt-get update && apt-get install -y \

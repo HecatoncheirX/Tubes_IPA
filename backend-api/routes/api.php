@@ -14,3 +14,5 @@ Route::post('/contact', [ContactController::class, 'store']);
 // Rate Limiting: Maksimal 60 request per menit
 Route::post('/contacts', [ContactController::class, 'store'])
     ->middleware('throttle:60,1');
+
+Route::get('/contacts', [ContactController::class, 'index']);
