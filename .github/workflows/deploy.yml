@@ -10,6 +10,7 @@ on:
 
 jobs:
   deploy:
+    # Hanya jalan jika CI (Test/Build) di main.yml SUKSES
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
@@ -17,16 +18,19 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          host: ${{ secrets.VPS_HOST }}       # Pastikan Secret ini ada
+          username: ${{ secrets.VPS_USERNAME }} # Pastikan Secret ini ada
+          password: ${{ secrets.VPS_PASSWORD }} # Pastikan Secret ini ada
           port: 22
           script: |
+            # Masuk ke folder project (misal: /root/tubes-ipa)
             cd ${{ secrets.PROJECT_PATH }}
             
+            # 1. Ambil kodingan terbaru
             git pull origin main
             
-            docker compose down
-            docker compose up -d --build
+            # 2. Build ulang container (Tanpa mematikan container dulu = Lebih cepat)
+            sudo docker compose up -d --build
             
-            docker system prune -f
+            # 3. Bersihkan sampah image bekas build
+            sudo docker system prune -f
