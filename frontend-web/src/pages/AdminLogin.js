@@ -28,7 +28,7 @@ const AdminLogin = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:8000/api/login", {
+      const response = await axios.post("http://31.220.18.132:8000/api/login", {
         email,
         password,
       });
