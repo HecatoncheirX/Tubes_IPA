@@ -94,7 +94,7 @@ const LandingPage = () => {
         </h1>
         <div className="bg-gradient-to-r from-white/5 to-white/10 border-l-4 border-emerald-500 px-6 py-3 font-bold text-sm mb-12 relative overflow-hidden group">
           <span className="relative">
-            kalyn@academy:~$ <span className="text-white">{text}</span>
+            kalyn@academygacor:~$ <span className="text-white">{text}</span>
             <span className="animate-pulse">_</span>
           </span>
         </div>
