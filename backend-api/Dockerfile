@@ -18,7 +18,7 @@ COPY . .
 # Install Composer (Manajer Paket PHP)
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer config --global process-timeout 2000 && \
-    composer install --no-interaction --optimize-autoloader
+    composer install --no-interaction --optimize-autoloader --no-dev --ignore-platform-reqs
 
 # Beri hak akses agar Laravel bisa menulis log/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
