@@ -26,7 +26,7 @@ const LandingPage = () => {
     e.preventDefault();
     setStatus({ type: "loading", msg: ">> ENCRYPTING_DATA..." });
     try {
-      const response = await fetch("http://localhost:8082/api/contact", {
+      const response = await fetch("/api/contacts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, phone: "-" }),

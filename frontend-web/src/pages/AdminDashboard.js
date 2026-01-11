@@ -26,7 +26,7 @@ const AdminDashboard = () => {
         return;
       }
 
-      const response = await axios.get("http://localhost:8000/api/contacts", {
+      const response = await axios.get("/api/contacts", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
