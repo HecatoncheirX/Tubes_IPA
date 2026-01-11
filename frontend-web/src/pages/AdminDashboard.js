@@ -58,7 +58,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#05070a] text-emerald-500 font-mono p-4 md:p-8 relative overflow-hidden">
-      {/* Animasi Background Scanline & Grid */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:30px_30px]"></div>
         <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/10 animate-[scan_4s_linear_infinite]"></div>
@@ -71,7 +70,6 @@ const AdminDashboard = () => {
             `}</style>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-emerald-500/30 pb-6">
           <div>
             <h1 className="text-3xl font-black tracking-tighter italic uppercase text-white hover:text-emerald-500 transition-colors cursor-default">
@@ -92,7 +90,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Loading Bar pas Refresh */}
         {refreshing && (
           <div className="w-full h-0.5 bg-emerald-900/30 mb-6 overflow-hidden">
             <div className="h-full bg-emerald-500 animate-loading w-1/3"></div>
@@ -101,7 +98,6 @@ const AdminDashboard = () => {
 
         {error && <div className="mb-6 p-4 border border-red-500/50 bg-red-500/10 text-red-500 text-xs font-bold tracking-widest animate-pulse">{error}</div>}
 
-        {/* Content Area */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-40 border border-emerald-500/10 bg-black/40">
             <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-6"></div>
@@ -146,7 +142,6 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* System Footer Info */}
         <div className="mt-8 flex flex-col md:flex-row justify-between text-[9px] uppercase tracking-[0.2em] opacity-40 italic gap-2">
           <p>{`>> LOCAL_ADDR: ${window.location.hostname}`}</p>
           <p>Kalyn_Academy_OS v2026.gacor // Secure_Admin_Panel</p>

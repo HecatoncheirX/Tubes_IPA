@@ -4,7 +4,6 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ErrorPage from "./pages/ErrorPage";
 
-// --- INI KOMPONEN LANDING PAGE (DESAIN ASLI LU YANG GOKIL) ---
 const LandingPage = () => {
   const [text, setText] = useState("");
   const fullText = "system_init --client='Kalyn Academy' --v=2026.gacor";
@@ -44,7 +43,6 @@ const LandingPage = () => {
 
   return (
     <div className="bg-[#05070a] text-gray-400 min-h-screen font-mono selection:bg-emerald-500 selection:text-black overflow-x-hidden">
-      {/* CSS KHUSUS ANIMASI - SEMUA GUA BALIKIN */}
       <style>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; width: max-content; animation: marquee 25s linear infinite; }
@@ -58,7 +56,7 @@ const LandingPage = () => {
         .scan-line { position: absolute; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #10b981, transparent); animation: scan 3s linear infinite; }
       `}</style>
 
-      {/* 1. NAVBAR */}
+      {/* NAVBAR */}
       <nav className="fixed top-0 w-full z-[100] bg-[#05070a]/95 backdrop-blur-xl border-b border-emerald-500/20 px-8 py-5 flex justify-between items-center shadow-lg shadow-emerald-500/5">
         <div className="text-white font-black text-2xl tracking-tighter italic glitch cursor-pointer relative group">
           KALYN<span className="text-emerald-500 underline decoration-white underline-offset-4">ACADEMY</span>
@@ -81,7 +79,7 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* 2. HERO SECTION */}
+      {/* HERO SECTION */}
       <section className="relative pt-64 pb-40 px-6 max-w-7xl mx-auto flex flex-col items-center text-center overflow-hidden">
         <div className="absolute top-40 w-full h-[400px] bg-emerald-500/10 blur-[150px] rounded-full -z-10 float-animation"></div>
         <div className="text-emerald-500 font-bold text-xs tracking-[0.5em] mb-6 animate-pulse pulse-glow px-4 py-2 border border-emerald-500/30 bg-emerald-500/5">[ INITIATING_ACADEMIC_REVOLUTION ]</div>
@@ -105,7 +103,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 3. ABOUT SECTION */}
+      {/* ABOUT SECTION */}
       <section id="about" className="relative py-32 px-6 bg-gradient-to-b from-white/[0.01] to-transparent border-y border-white/5 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-black text-white mb-20 uppercase italic tracking-tighter border-b-4 border-emerald-500 inline-block hover:skew-x-3 transition-transform">System_Profiles.log</h2>
@@ -128,7 +126,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 4. LAYANAN SECTION */}
+      {/* LAYANAN SECTION */}
       <section id="layanan" className="py-32 px-6 max-w-7xl mx-auto">
         <h2 className="text-4xl font-black text-white mb-20 uppercase tracking-tighter text-right italic">./Services_Pricing</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -148,7 +146,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 5. PROGRAM SECTION */}
+      {/* PROGRAM SECTION */}
       <section id="program" className="relative py-32 px-6 bg-emerald-500 text-black overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
           <h2 className="text-5xl font-black mb-20 uppercase tracking-tighter border-b-8 border-black inline-block skew-x-6 italic">Program_Schedules_2026</h2>
@@ -174,7 +172,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 6. TESTIMONI SECTION */}
+      {/* TESTIMONI SECTION */}
       <section className="py-40 bg-black overflow-hidden border-y border-white/5 relative">
         <div className="animate-marquee whitespace-nowrap">
           {[1, 2, 3].map((_, i) => (
@@ -192,7 +190,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 7. CONTACT SECTION */}
+      {/* CONTACT SECTION */}
       <section id="contact" className="relative py-40 px-6 max-w-4xl mx-auto overflow-hidden">
         <div className="grid md:grid-cols-2 gap-16 relative z-10">
           <div>
@@ -248,7 +246,6 @@ const LandingPage = () => {
   );
 };
 
-// --- INI FUNGSI APP UTAMA (FIX ROUTING & NO ERROR) ---
 function App() {
   return (
     <Router>

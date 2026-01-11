@@ -5,7 +5,6 @@ const ErrorPage = ({ code = "404", message = "PAGE_NOT_FOUND" }) => {
   const navigate = useNavigate();
   const [glitch, setGlitch] = useState(false);
 
-  // Efek flicker/glitch otomatis tiap beberapa detik
   useEffect(() => {
     const interval = setInterval(() => {
       setGlitch(true);
@@ -16,7 +15,6 @@ const ErrorPage = ({ code = "404", message = "PAGE_NOT_FOUND" }) => {
 
   return (
     <div className="min-h-screen bg-[#05070a] flex flex-col items-center justify-center font-mono p-4 overflow-hidden relative text-emerald-500">
-      {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-500/5 via-transparent to-transparent opacity-50"></div>
         <div className="absolute top-0 left-0 w-full h-2 bg-red-500/10 animate-[scan_2s_linear_infinite]"></div>
@@ -36,12 +34,10 @@ const ErrorPage = ({ code = "404", message = "PAGE_NOT_FOUND" }) => {
             `}</style>
 
       <div className={`relative z-10 text-center ${glitch ? "skew-x-12 opacity-80" : ""}`}>
-        {/* Error Code Big Display */}
         <h1 className="text-[12rem] md:text-[20rem] font-black leading-none tracking-tighter italic text-transparent" style={{ WebkitTextStroke: "2px #10b981" }}>
           {code}
         </h1>
 
-        {/* Overlay Text Glitch */}
         {glitch && <h1 className="absolute inset-0 text-[12rem] md:text-[20rem] font-black leading-none tracking-tighter italic text-red-500 opacity-50 animate-noise">{code}</h1>}
 
         <div className="mt-8 space-y-4">
@@ -65,7 +61,6 @@ const ErrorPage = ({ code = "404", message = "PAGE_NOT_FOUND" }) => {
         </div>
       </div>
 
-      {/* Terminal Log Footer */}
       <div className="absolute bottom-8 left-8 text-[10px] opacity-30 hidden md:block">
         <p>LOCATION: {window.location.pathname}</p>
         <p>TIMESTAMP: {new Date().toISOString()}</p>

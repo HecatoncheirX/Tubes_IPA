@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// Menggunakan instance api kustom Anda untuk konsistensi baseURL
 import api from "../utils/api";
 
 const AdminLogin = () => {
@@ -13,7 +12,6 @@ const AdminLogin = () => {
 
   const navigate = useNavigate();
 
-  // Efek Terminal Booting
   useEffect(() => {
     const lines = ["> INITIALIZING_AUTH_PROTOCOL...", "> LOADING_ENCRYPTION_KEYS...", "> SECURE_CONNECTION_ESTABLISHED", "> WAITING_FOR_ADMIN_CREDENTIALS..."];
     lines.forEach((line, i) => {
@@ -29,24 +27,20 @@ const AdminLogin = () => {
     setError("");
 
     try {
-      // Memanggil endpoint /login pada backend Laravel melalui utilitas api.js
       const response = await api.post("/login", {
         email,
         password,
       });
 
-      // Jika token diterima dari backend-api/app/Http/Controllers/AuthController.php
       if (response.data.token) {
         localStorage.setItem("admin_token", response.data.token);
         setShowSuccess(true);
 
-        // Delay 2 detik untuk efek visual sebelum navigasi ke dashboard
         setTimeout(() => {
           navigate("/admin/dashboard");
         }, 2000);
       }
     } catch (err) {
-      // Mengambil pesan error spesifik dari response backend jika tersedia
       const errorMessage = err.response?.data?.message || "INVALID_IDENTITY_DETECTED";
       setError(`>> ACCESS_DENIED: ${errorMessage.toUpperCase()}`);
     } finally {
@@ -56,7 +50,6 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-[#05070a] flex items-center justify-center font-mono p-4 overflow-hidden relative">
-      {/* Animasi Background Scanline & Glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/10 animate-[scan_3s_linear_infinite]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/5 via-transparent to-transparent"></div>
@@ -72,14 +65,12 @@ const AdminLogin = () => {
                 .glitch-box { animation: glitch-p 0.2s ease-in-out infinite; }
             `}</style>
 
-      {/* Box Login Utama */}
       <div className="max-w-md w-full border border-emerald-500/30 bg-black/80 backdrop-blur-md p-8 relative shadow-[0_0_50px_rgba(16,185,129,0.1)]">
         <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-emerald-500"></div>
         <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-emerald-500"></div>
         <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-emerald-500"></div>
         <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-emerald-500"></div>
 
-        {/* Header Terminal */}
         <div className="mb-8">
           <div className="flex gap-2 mb-4">
             <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
@@ -136,7 +127,6 @@ const AdminLogin = () => {
         </form>
       </div>
 
-      {/* Popup Berhasil (Success Modal) */}
       {showSuccess && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-xl">
           <div className="glitch-box border-4 border-emerald-500 bg-black p-10 text-center shadow-[0_0_100px_rgba(16,185,129,0.4)]">
