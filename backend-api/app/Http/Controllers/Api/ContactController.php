@@ -33,7 +33,6 @@ class ContactController extends Controller
                 'success' => true,
                 'message' => 'Data transmitted successfully.'
             ], 201);
-
         } catch (\Exception $e) {
             // 4. Jika Database Error, beri tahu Frontend
             return response()->json([
@@ -41,5 +40,11 @@ class ContactController extends Controller
                 'message' => 'Database Error: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function index()
+    {
+        // Return langsung array-nya, jangan dibungkus 'data' => ...
+        return response()->json(\App\Models\Contact::latest()->get());
     }
 }

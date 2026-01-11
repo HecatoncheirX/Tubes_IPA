@@ -2,17 +2,21 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ContactController; 
+use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\AuthController;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/login', [AuthController::class, 'login']);
 
-// Route Endpoint
-Route::post('/contact', [ContactController::class, 'store']);
-
-// Rate Limiting: Maksimal 60 request per menit
 Route::post('/contacts', [ContactController::class, 'store'])
     ->middleware('throttle:60,1');
 
-Route::get('/contacts', [ContactController::class, 'index']);
+Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::get('/contacts', [ContactController::class, 'index']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
