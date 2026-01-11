@@ -1,16 +1,17 @@
-name: CI Tubes IPA (Laravel + React)
+name: CI/CD Tubes IPA (Laravel + React)
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
+  workflow_dispatch: 
 
 jobs:
+  # 1. TEST BACKEND
   laravel-test:
     name: Backend Test (Laravel)
     runs-on: ubuntu-latest
-    
     defaults:
       run:
         working-directory: ./backend-api
@@ -22,7 +23,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.4' 
+        php-version: '8.4'
         extensions: mbstring, dom, fileinfo, mysql
     
     - name: Copy .env
@@ -37,6 +38,7 @@ jobs:
     - name: Run Tests (PHPUnit)
       run: php artisan test
 
+  # 2. BUILD FRONTEND
   react-build:
     name: Frontend Build (React)
     runs-on: ubuntu-latest
@@ -56,8 +58,42 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Check Linting (Opsional)
-      run: echo "Linting dilewati dulu..." # SAYA TAMBAHKAN INI AGAR TIDAK ERROR
+    - name: Check Linting (Skip)
+      run: echo "Linting dilewati..."
 
     - name: Run Build
       run: CI=false npm run build
+
+  # 3. DEPLOY KE VPS (Hanya jalan kalau Test & Build sukses)
+  deploy:
+    name: 🚀 Auto Deploy to VPS
+    runs-on: ubuntu-latest
+    
+    needs: [laravel-test, react-build]
+    
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: 22
+          script: |
+            # Masuk ke folder project
+            cd ${{ secrets.PROJECT_PATH }}
+            
+            # 1. Ambil kodingan terbaru
+            git pull origin main
+            
+            # 2. Paksa Build Frontend tanpa cache (Biar teks pasti berubah)
+            # Pastikan nama service di docker-compose.yml adalah 'frontend'
+            sudo docker compose build --no-cache frontend
+            
+            # 3. Build & Restart sisanya
+            sudo docker compose up -d --build
+            
+            # 4. Bersihkan sampah
+            sudo docker system prune -f
