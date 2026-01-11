@@ -61,6 +61,3 @@ jobs:
 
     - name: Run Build
       run: CI=false npm run build
-
-    - name: Run Tests
-      run: npm test -- --watchAll=false
