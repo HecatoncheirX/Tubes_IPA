@@ -2,16 +2,16 @@ services:
   # --- Service 1: Database (PostgreSQL) ---
   db:
     image: postgres:15
-    container_name: tubes_db # Nama Baru
+    container_name: tubes_db
     restart: always
     environment:
-      POSTGRES_DB: tubes_db # Nama DB Baru
-      POSTGRES_USER: tubes_user # User Baru
-      POSTGRES_PASSWORD: tubes_password # Password Baru
+      POSTGRES_DB: tubes_db
+      POSTGRES_USER: tubes_user
+      POSTGRES_PASSWORD: tubes_password
     volumes:
       - ./db-data:/var/lib/postgresql/data
-    # ports:
-    #   - "5435:5432" # Port Aman
+    # ports:             
+    #   - "5435:5432"
     networks:
       - tubes_net
 
@@ -20,13 +20,13 @@ services:
     build:
       context: ./backend-api
       dockerfile: Dockerfile
-    container_name: tubes_backend # Nama Baru
+    container_name: tubes_backend
     restart: always
     working_dir: /var/www/html
     volumes:
       - ./backend-api:/var/www/html
     ports:
-      - "8082:8000" # Port Aman
+      - "8082:8000"      # Aman
     depends_on:
       - db
     networks:
@@ -37,10 +37,10 @@ services:
     build:
       context: ./frontend-web
       dockerfile: Dockerfile
-    container_name: tubes_frontend # Nama Baru
+    container_name: tubes_frontend
     restart: always
     ports:
-      - "8081:80" # Port Aman
+      - "8081:80"        # Aman
     depends_on:
       - backend
     networks:
@@ -52,7 +52,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"
+      - "9090:9090"      # Aman
     networks:
       - tubes_net
 
@@ -65,7 +65,7 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     ports:
-      - "8080:8080"
+      - "8084:8080"
     networks:
       - tubes_net
 
@@ -73,9 +73,9 @@ services:
     image: grafana/grafana:latest
     container_name: tubes_grafana
     ports:
-      - "3001:3000" # Grafana jalan di port 3000 (Pastikan React geser ke port lain atau Grafana pake 3001)
+      - "3001:3000"      # Aman
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin # Password login grafana
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
       - tubes_net
     depends_on:
