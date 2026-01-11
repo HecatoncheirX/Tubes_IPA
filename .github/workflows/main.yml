@@ -11,11 +11,9 @@ jobs:
     name: Backend Test (Laravel)
     runs-on: ubuntu-latest
     
-    # --- BAGIAN INI SANGAT PENTING ---
     defaults:
       run:
         working-directory: ./backend-api
-    # ---------------------------------
 
     steps:
     - name: Checkout code
@@ -24,7 +22,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.4'  # SAYA UBAH JADI 8.4 AGAR SESUAI DENGAN DOCKERFILE
+        php-version: '8.4' 
         extensions: mbstring, dom, fileinfo, mysql
     
     - name: Copy .env
