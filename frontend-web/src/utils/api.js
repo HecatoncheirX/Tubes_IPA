@@ -1,16 +1,33 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "http://31.220.18.132:8000/api",
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("admin_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 500) {
-      // Arahkan ke halaman error 500
       window.location.href = "/error-500";
     }
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("admin_token");
+      window.location.href = "/admin/login";
+    }
+
     return Promise.reject(error);
   }
 );

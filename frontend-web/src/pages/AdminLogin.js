@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// Menggunakan instance api kustom Anda untuk konsistensi baseURL
+import api from "../utils/api";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -28,21 +29,26 @@ const AdminLogin = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://31.220.18.132:8000/api/login", {
+      // Memanggil endpoint /login pada backend Laravel melalui utilitas api.js
+      const response = await api.post("/login", {
         email,
         password,
       });
 
+      // Jika token diterima dari backend-api/app/Http/Controllers/AuthController.php
       if (response.data.token) {
         localStorage.setItem("admin_token", response.data.token);
         setShowSuccess(true);
-        // Delay bentar biar user liat popup berhasilnya yang kece
+
+        // Delay 2 detik untuk efek visual sebelum navigasi ke dashboard
         setTimeout(() => {
           navigate("/admin/dashboard");
         }, 2000);
       }
     } catch (err) {
-      setError(">> ACCESS_DENIED: INVALID_IDENTITY_DETECTED");
+      // Mengambil pesan error spesifik dari response backend jika tersedia
+      const errorMessage = err.response?.data?.message || "INVALID_IDENTITY_DETECTED";
+      setError(`>> ACCESS_DENIED: ${errorMessage.toUpperCase()}`);
     } finally {
       setLoading(false);
     }
@@ -80,7 +86,7 @@ const AdminLogin = () => {
             <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
             <div className="w-3 h-3 rounded-full bg-emerald-500/50"></div>
           </div>
-          <h2 className="text-white text-2xl font-black italic tracking-tighter uppercase italic">
+          <h2 className="text-white text-2xl font-black italic tracking-tighter uppercase">
             AUTH<span className="text-emerald-500">_PORTAL</span>
           </h2>
           <div className="mt-4 space-y-1">
