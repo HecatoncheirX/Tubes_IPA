@@ -10,9 +10,12 @@ jobs:
   laravel-test:
     name: Backend Test (Laravel)
     runs-on: ubuntu-latest
+    
+    # --- BAGIAN INI SANGAT PENTING ---
     defaults:
       run:
         working-directory: ./backend-api
+    # ---------------------------------
 
     steps:
     - name: Checkout code
@@ -50,7 +53,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Install Dependencies
       run: npm ci
