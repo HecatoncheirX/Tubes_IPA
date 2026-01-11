@@ -1,0 +1,32 @@
+name: Auto Deploy to VPS
+
+on:
+  workflow_run:
+    workflows: ["CI Tubes IPA (Laravel + React)"]
+    types:
+      - completed
+  
+  workflow_dispatch: 
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: 22
+          script: |
+            cd ${{ secrets.PROJECT_PATH }}
+            
+            git pull origin main
+            
+            docker compose down
+            docker compose up -d --build
+            
+            docker system prune -f
