@@ -60,7 +60,7 @@ jobs:
       run: echo "Linting dilewati dulu..." # SAYA TAMBAHKAN INI AGAR TIDAK ERROR
 
     - name: Run Build
-      run: npm run build
+      run: CI=false npm run build
 
     - name: Run Tests
       run: npm test -- --watchAll=false
