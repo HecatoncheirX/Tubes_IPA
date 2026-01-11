@@ -54,7 +54,7 @@ jobs:
         node-version: '20'
 
     - name: Install Dependencies
-      run: npm ci
+      run: npm install
 
     - name: Check Linting (Opsional)
       run: echo "Linting dilewati dulu..." # SAYA TAMBAHKAN INI AGAR TIDAK ERROR
